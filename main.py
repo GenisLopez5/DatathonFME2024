@@ -61,7 +61,7 @@ def mastegar(data, file_name):
 
     # Treballar amb cada columna numèrica una a una
     for columna in columnes_numeriques.columns:
-        if(columna in ['Listing.ListingId', 'Listing.Price.ClosePrice']): continue
+        if(columna in ['Listing.ListingId']): continue
         # Calcular Q1, Q3 i IQR per a la columna actual (ignorant els NaN)
         Q1 = columnes_numeriques[columna].quantile(0.1)
         Q3 = columnes_numeriques[columna].quantile(0.9)

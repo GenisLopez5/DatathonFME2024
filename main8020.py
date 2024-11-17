@@ -61,7 +61,7 @@ def mastegar(data, file_name):
 
     # Treballar amb cada columna numèrica una a una
     for columna in columnes_numeriques.columns:
-        if(columna in ['Listing.ListingId', 'Listing.Price.ClosePrice']): continue
+        if(columna in ['Listing.ListingId']): continue
         # Calcular Q1, Q3 i IQR per a la columna actual (ignorant els NaN)
         Q1 = columnes_numeriques[columna].quantile(0.1)
         Q3 = columnes_numeriques[columna].quantile(0.9)
@@ -260,8 +260,7 @@ def mastegar(data, file_name):
 rawdata = pd.read_csv("train.csv", low_memory=False)
 rawdata.drop_duplicates() # remove duplicates
 
-data80 = rawdata.iloc[0 : 80000]
-test = rawdata.iloc[80000 : len(rawdata)]
-
+data80 = rawdata[0 : 80000]
+test20 = rawdata[80000 : len(rawdata)]
 mastegar(data80, 'train_final.csv')
-mastegar(test, 'test_final.csv')
+mastegar(test20, 'test_final.csv')
