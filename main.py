@@ -93,8 +93,8 @@ def mastegar(data, file_name):
     # and calculate the distance between the two points
     # and add it a new column called distancetoCenter
     for index, row in columnes_numeriques.iterrows():
-        lat = row['Location.Address.Latitude']
-        lon = row['Location.Address.Longitude']
+        lat = row['Location.GIS.Latitude']
+        lon = row['Location.GIS.Longitude']
         center_lat = 41.87910175267358
         center_lon = -87.63602111218532
         columnes_numeriques.at[index, 'distancetoCenter'] = haversine(lat, lon, center_lat, center_lon)
@@ -312,8 +312,8 @@ def mastegar_test(data, file_name):
     # and calculate the distance between the two points
     # and add it a new column called distancetoCenter
     for index, row in columnes_numeriques.iterrows():
-        lat = row['Location.Address.Latitude']
-        lon = row['Location.Address.Longitude']
+        lat = row['Location.GIS.Latitude']
+        lon = row['Location.GIS.Longitude']
         center_lat = 41.87910175267358
         center_lon = -87.63602111218532
         columnes_numeriques.at[index, 'distancetoCenter'] = haversine(lat, lon, center_lat, center_lon)
