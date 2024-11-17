@@ -207,11 +207,15 @@ def mastegar(data, file_name):
         'ImageData.room_type_reso.results',
         'ImageData.features_reso.results',
         'Characteristics.LotFeatures'
+        'Listing.Dates.CloseDate',
     ]
 
     # Step 1: Process "chunga" columns
     for columna in columnes_categoriques.columns:
         if columna in chunga_columns:
+            if(columna == 'Listing.Dates.CloseDate'):
+                # convert dates to months
+                columnes_categoriques[columna] = pd.to_datetime(columnes_categoriques[columna]).dt.month
             # Safely parse and explode the column
             columnes_categoriques[columna] = columnes_categoriques[columna].map(safe_eval)
             data_exploded = columnes_categoriques[columna].explode()
@@ -324,10 +328,6 @@ def mastegar_test(data, file_name):
     #drop Location.Address.StreetDirectionPrefix
     # no es rellevant
     columnes_categoriques = columnes_categoriques.drop('Location.Address.StreetDirectionPrefix', axis=1)
-
-    # DROP Location.Address.StreetName
-    # nombre d'ocurrencies no es prou gran per cada categoria
-    columnes_categoriques = columnes_categoriques.drop('Location.Address.StreetName', axis=1)
 
     # DROP Location.Area.SubdivisionName
     # no es rellevant
