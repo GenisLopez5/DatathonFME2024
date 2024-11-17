@@ -153,6 +153,9 @@ def mastegar(data, file_name):
     # no es rellevant
     columnes_categoriques = columnes_categoriques.drop('Location.Address.PostalCode', axis=1)
 
+    columnes_categoriques = columnes_categoriques.drop('Location.Address.City', axis=1)
+    columnes_categoriques = columnes_categoriques.drop('Location.Address.CountyOrParish', axis=1)
+
 
     # %% [markdown]
     # CHUNGAS BORRAR (TEMPORAL)
@@ -239,9 +242,9 @@ def mastegar(data, file_name):
 
     # %%
     # for every column see how many unique values it has and its count
-    for col in columnes_categoriques.columns:
-        print(columnes_categoriques[col].value_counts())
-        print()
+    # for col in columnes_categoriques.columns:
+    #     print(columnes_categoriques[col].value_counts())
+    #     print()
 
     # %%
     # add ListingId to the categorical columns
