@@ -362,6 +362,10 @@ def mastegar_test(data, file_name):
     # no es rellevant
     columnes_categoriques = columnes_categoriques.drop('Location.Address.StreetDirectionPrefix', axis=1)
 
+    # DROP Location.Address.StreetName
+    # nombre d'ocurrencies no es prou gran per cada categoria
+    columnes_categoriques = columnes_categoriques.drop('Location.Address.StreetName', axis=1)
+
     # DROP Location.Area.SubdivisionName
     # no es rellevant
     columnes_categoriques = columnes_categoriques.drop('Location.Area.SubdivisionName', axis=1)
