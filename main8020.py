@@ -259,8 +259,9 @@ def mastegar(data, file_name):
 # Load the data
 rawdata = pd.read_csv("train.csv", low_memory=False)
 rawdata.drop_duplicates() # remove duplicates
-mastegar(rawdata, 'train_final.csv')
 
-rawdata = pd.read_csv("test.csv", low_memory=False)
-rawdata.drop_duplicates() # remove duplicates
-mastegar(rawdata, 'test_final.csv')
+data80 = rawdata.iloc[0 : 80000]
+test = rawdata.iloc[80000 : len(rawdata)]
+
+mastegar(data80, 'train_final.csv')
+mastegar(test, 'test_final.csv')
