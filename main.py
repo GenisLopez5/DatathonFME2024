@@ -207,15 +207,11 @@ def mastegar(data, file_name):
         'ImageData.room_type_reso.results',
         'ImageData.features_reso.results',
         'Characteristics.LotFeatures'
-        'Listing.Dates.CloseDate',
     ]
 
     # Step 1: Process "chunga" columns
     for columna in columnes_categoriques.columns:
         if columna in chunga_columns:
-            if(columna == 'Listing.Dates.CloseDate'):
-                # convert dates to months
-                columnes_categoriques[columna] = pd.to_datetime(columnes_categoriques[columna]).dt.month
             # Safely parse and explode the column
             columnes_categoriques[columna] = columnes_categoriques[columna].map(safe_eval)
             data_exploded = columnes_categoriques[columna].explode()
@@ -232,6 +228,9 @@ def mastegar(data, file_name):
             columnes_categoriques.drop(columns=[columna], inplace=True)
 
         else:
+            if(columna == 'Listing.Dates.CloseDate'):
+                # convert dates to months
+                columnes_categoriques[columna] = pd.to_datetime(columnes_categoriques[columna]).dt.month
             # Process non-"chunga" columns normally
             columnes_categoriques[columna] = cleanColumn(columnes_categoriques[columna])
             dummies = pd.get_dummies(columnes_categoriques[columna], drop_first=True)
@@ -395,15 +394,11 @@ def mastegar_test(data, file_name):
         'ImageData.room_type_reso.results',
         'ImageData.features_reso.results',
         'Characteristics.LotFeatures',
-        'Listing.Dates.CloseDate'
     ]
 
     # Step 1: Process "chunga" columns
     for columna in columnes_categoriques.columns:
         if columna in chunga_columns:
-            if(columna == 'Listing.Dates.CloseDate'):
-                # convert dates to months
-                columnes_categoriques[columna] = pd.to_datetime(columnes_categoriques[columna]).dt.month
             # Safely parse and explode the column
             columnes_categoriques[columna] = columnes_categoriques[columna].map(safe_eval)
             data_exploded = columnes_categoriques[columna].explode()
@@ -420,6 +415,9 @@ def mastegar_test(data, file_name):
             columnes_categoriques.drop(columns=[columna], inplace=True)
 
         else:
+            if(columna == 'Listing.Dates.CloseDate'):
+                # convert dates to months
+                columnes_categoriques[columna] = pd.to_datetime(columnes_categoriques[columna]).dt.month
             # Process non-"chunga" columns normally
             if (columna == 'Listing.ListingId'): continue
 
@@ -430,11 +428,7 @@ def mastegar_test(data, file_name):
 
         print(f"Processed column: {columna}")
 
-    # %%
-
-
-
-    # %%
+     # %%
     # for every column see how many unique values it has and its count
     for col in columnes_categoriques.columns:
         print(columnes_categoriques[col].value_counts())
