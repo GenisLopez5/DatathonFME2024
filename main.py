@@ -19,7 +19,17 @@ def cleanColumn(column):
     to_replace = value_counts[value_counts < threshold].index
     return column.replace(to_replace, 'Others')
 
+# get distance between two coordinates in km 
+def haversine(lat1, lon1, lat2, lon2):
+    R = 6371  # Earth radius in km
 
+    dlat = np.radians(lat2 - lat1)
+    dlon = np.radians(lon2 - lon1)
+    a = np.sin(dlat / 2) * np.sin(dlat / 2) + np.cos(np.radians(lat1)) * np.cos(np.radians(lat2)) * np.sin(dlon / 2) * np.sin(dlon / 2)
+    c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1 - a))
+    d = R * c
+
+    return d
 
 
 # Map the 'ImageData.style.stories.summary.label' column to numeric values
@@ -79,6 +89,17 @@ def mastegar(data, file_name):
 
     columnes_numeriques
 
+    # iterate over all the rows of lat and lon 
+    # and calculate the distance between the two points
+    # and add it a new column called distancetoCenter
+    for index, row in columnes_numeriques.iterrows():
+        lat = row['Location.Address.Latitude']
+        lon = row['Location.Address.Longitude']
+        center_lat = 41.87910175267358
+        center_lon = -87.63602111218532
+        columnes_numeriques.at[index, 'distancetoCenter'] = haversine(lat, lon, center_lat, center_lon)
+
+    
     # %%
     # canviar els NaN per la mitjana de la columna
     columnes_numeriques = columnes_numeriques.apply(lambda col: col.fillna(col.mean(skipna=True)) if col.dtype in ['float64', 'int64'] else col)
@@ -284,6 +305,19 @@ def mastegar_test(data, file_name):
     columnes_numeriques = pd.concat([data['Listing.ListingId'], columnes_numeriques], axis=1)
 
     columnes_categoriques = data.select_dtypes(exclude=['number'])  # Selecciona columnes no numèriques (categòriques)
+
+
+
+    # iterate over all the rows of lat and lon 
+    # and calculate the distance between the two points
+    # and add it a new column called distancetoCenter
+    for index, row in columnes_numeriques.iterrows():
+        lat = row['Location.Address.Latitude']
+        lon = row['Location.Address.Longitude']
+        center_lat = 41.87910175267358
+        center_lon = -87.63602111218532
+        columnes_numeriques.at[index, 'distancetoCenter'] = haversine(lat, lon, center_lat, center_lon)
+
 
     # %%
     # canviar els NaN per la mitjana de la columna
